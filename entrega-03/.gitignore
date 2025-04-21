@@ -1,0 +1,7 @@
+MNIST
+/hls/Project
+*.log
+*.jou
+*.dat
+*.pth
+/python/train_history_dict

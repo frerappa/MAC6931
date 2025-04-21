@@ -7,6 +7,7 @@ from model import CNN
 import torchsummary
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
 
 def load_test_data():
     transform = transforms.Compose([transforms.ToTensor()])
@@ -43,9 +44,10 @@ def measure_inference_time(model, test_loader, num_samples=10000):
     print(f"Average Inference Time: {avg_time:.4f} ms | Standard Deviation: {std_time:.4f} ms")
 
 def main():
+    print(f"Using device {device}")
     test_loader = load_test_data()
     model = CNN().to(device)
-    torchsummary.summary(model, (1,28,28), device="cpu")
+    torchsummary.summary(model, (1, 28, 28), device=str(device))
     model.load_state_dict(torch.load("model.pth", map_location=device))
     evaluate(model, test_loader)
     measure_inference_time(model, test_loader)

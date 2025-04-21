@@ -22,7 +22,7 @@ training_epochs = 6
 pad = conv_kernel_size[0] // 2
 
 # Paths
-headers_dir = "./headers"
+headers_dir = "../headers"
 os.makedirs(headers_dir, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

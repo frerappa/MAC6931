@@ -5,3 +5,5 @@ MNIST
 *.dat
 *.pth
 /python/train_history_dict
+__pycache__
+/c/cnn

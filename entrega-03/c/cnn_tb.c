@@ -116,6 +116,7 @@ int main () {
 
   printf("\nCorrect predictions: %.2f %% (%d) total\n", correctPRedictionRate, N);
   printf("Average Inference Time: %f ms | Standard Deviation: %f ms\n", 1000 * mean, 1000 * stddev );
+  printf("Total Inference Time: %f s\n", time );
 
 
   free(images);

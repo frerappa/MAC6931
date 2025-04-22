@@ -42,6 +42,8 @@ def measure_inference_time(model, test_loader, num_samples=10000):
     avg_time = np.mean(times)
     std_time = np.std(times)
     print(f"Average Inference Time: {avg_time:.4f} ms | Standard Deviation: {std_time:.4f} ms")
+    print(f"Total Inference Time: {np.sum(times) / 1000 :.4f} s")
+
 
 def main():
     print(f"Using device {device}")

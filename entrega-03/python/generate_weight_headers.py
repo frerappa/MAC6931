@@ -11,6 +11,7 @@ import os
 import math
 import matplotlib.pyplot as plt
 from model import CNN
+from utils import load_dataset
 
 # Constants
 input_size = (28, 28)
@@ -27,19 +28,7 @@ os.makedirs(headers_dir, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Dataset loading and normalization
-def load_dataset():
-    transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-    train_val = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    test = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
 
-    train_size = int(0.8 * len(train_val))
-    val_size = len(train_val) - train_size
-    train, val = random_split(train_val, [train_size, val_size])
-
-    return train, val, test
 
 
 
@@ -203,6 +192,7 @@ def measure_prediction_time(model, test_loader):
 
 def main():
     train_ds, val_ds, test_ds = load_dataset()
+    print(f"Training images: {len(train_ds)} | Validation images: {len(val_ds)} | Testing images: {len(test_ds)}")
     train_loader = DataLoader(train_ds, batch_size=32, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=32)
     test_loader = DataLoader(test_ds, batch_size=1)

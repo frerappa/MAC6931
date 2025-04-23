@@ -7,7 +7,6 @@ from model import CNN
 import torchsummary
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
 
 def load_test_data():
     transform = transforms.Compose([transforms.ToTensor()])

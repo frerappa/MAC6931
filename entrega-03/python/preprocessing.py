@@ -10,7 +10,9 @@ import time
 import os
 import math
 import matplotlib.pyplot as plt
+import pandas as pd
 from utils import load_dataset
+
 
 def show_images_by_class(dataset, labels: dict, n_images=5):
     n_classes = len(labels)
@@ -52,7 +54,15 @@ def main():
     trainset, _, _ = load_dataset()
     show_images_by_class(trainset, labels_map, 6)
 
-
+    df = pd.read_csv("./csv/power_log.csv")
+    df['time_ms'] = df.index * 50
+    plt.figure(figsize=(14, 5))
+    plt.plot(df['time_ms'], df['power.draw [W]'], label='Consumo (W)')
+    plt.xlabel('Tempo (ms)')
+    plt.ylabel('Consumo energético (W)')
+    plt.title('Consumo de Energia da GPU')
+    plt.grid(True)
+    plt.savefig("./images/graph.png")
 
 if __name__ == "__main__":
     main()

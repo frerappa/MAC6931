@@ -8,24 +8,27 @@
 
 #define N 10000
 
-int read_images(const char * file, float images[N][IMG_ROWS][IMG_COLS]) {
-  FILE *fp;
-
-  fp = fopen(file, "r");
+int readImages(const char *file, float images[N][IMG_ROWS][IMG_COLS]) {
+  FILE *fp = fopen(file, "r");
 
   if (fp == NULL)
     return -1;
 
-  for (int i = 0; i < N; i++)
-    for (int x = 0; x < IMG_ROWS; ++x)
-      for (int y = 0; y < IMG_COLS; ++y)
-        if(fscanf(fp, "%f", & images[i][x][y]) != 1)
-          return 1; 
+  for (int i = 0; i < N; i++) {
+    for (int x = 0; x < IMG_ROWS; x++) {
+      for (int y = 0; y < IMG_COLS; y++) {
+        if (fscanf(fp, "%f", &images[i][x][y]) != 1) {
+          return 1;
+        }
+      }
+    }
+  }
+
 
   return fclose(fp);
 }
 
-int read_labels(const char * file, int labels[N]) {
+int readLabels(const char * file, int labels[N]) {
   FILE *fp = fopen(file, "r");
 
   if (fp == NULL) {
@@ -64,12 +67,12 @@ int main () {
       return 1;
   }
 
-  if (0 != read_images("../data/in.dat", images)) {
+  if (0 != readImages("../data/in.dat", images)) {
     printf("Error: can't open file ``../data/in.dat''\n");
     return 1;
   }
 
-  if (0 != read_labels("../data/out.dat", labels)) {
+  if (0 != readLabels("../data/out.dat", labels)) {
     printf("Error: can't open file ``../data/out.dat''\n");
     return 1;
   }
@@ -93,8 +96,9 @@ int main () {
       normalizationAndPadding(images[i], pad_img);
       print_pad_img(pad_img);
       printf("Predictions\n");
-      for (int j = 0; j < DIGITS; j++)
+      for (int j = 0; j < DIGITS; j++) {
         printf("%d: %f\n", j, prediction[j]);
+      }
       printf("\n********************************\n");
     }
 
